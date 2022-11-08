@@ -6,29 +6,32 @@ public class ArrayStorage {
     int size = 0;
 
     void clear() {
-        for (int i = 0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
         size = 0;
     }
 
     void save(Resume r) {
-        storage[size++]=r;
+        storage[size++] = r;
     }
 
     Resume get(String uuid) {
-        if (findIndex(uuid) >= 0)
+        try{
             return storage[findIndex(uuid)];
-        else
+        } catch (ArrayIndexOutOfBoundsException e){
             return null;
+        }
     }
 
     void delete(String uuid) {
-        if (findIndex(uuid) >= 0) {
+        try {
             for (int i = findIndex(uuid); i < size; i++) {
                 storage[i] = storage[i + 1];
             }
             size--;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Nothing to delete");
         }
     }
 
