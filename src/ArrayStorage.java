@@ -3,71 +3,63 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int returnArrayLength = 0;
+    int size = 0;
 
     void clear() {
         for (int i = 0; storage[i] != null; i++) {
             storage[i] = null;
-            returnArrayLength--;
         }
+        size = 0;
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
-                returnArrayLength++;
+                size++;
                 break;
             }
         }
     }
 
-    int searchUuid(String uuid) {
-        int searchResult = -1;
-        for (int i = 0; i < returnArrayLength; i++) {
-            if (createReturnArray()[i].toString().equals(uuid)) {
-                searchResult = i;
-            }
-        }
-        return searchResult;
-    }
-
-    boolean checkSearchUuid(int searchResult) { 
-        return searchResult >= 0;
-    }
-
     Resume get(String uuid) {
-        if (checkSearchUuid(searchUuid(uuid))) 
-            return createReturnArray()[searchUuid(uuid)];
+        if (findIndex(uuid) >= 0)
+            return storage[findIndex(uuid)];
         else
             return null;
     }
 
     void delete(String uuid) {  
-        if (checkSearchUuid(searchUuid(uuid))) {
-            for (int i = searchUuid(uuid); storage[i] != null; i++) {
+        if (findIndex(uuid) >= 0) {
+            for (int i = findIndex(uuid); i < size; i++) {
                 storage[i] = storage[i + 1];
             }
-            returnArrayLength--;
+            size--;
         }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] createReturnArray() {
-        Resume[] returnArray = new Resume[returnArrayLength];
-        for (int i = 0; i < returnArrayLength; i++) {  //IDEA предлагает System.arraycopy, я такое еще не умею
+
+    Resume[] getAll() {
+        Resume[] returnArray = new Resume[size];
+        for (int i = 0; i < size; i++) {
             returnArray[i] = storage[i];
         }
         return returnArray;
     }
 
-    Resume[] getAll() {
-        return createReturnArray();
+    int size() {
+        return size;
     }
 
-    int size() {
-        return returnArrayLength;
+    private int findIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
