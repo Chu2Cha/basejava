@@ -40,7 +40,7 @@ public class ArrayStorage {
         if (checkSearchUuid(searchUuid(uuid))) 
             return createReturnArray()[searchUuid(uuid)];
         else
-            return null; //Как 
+            return null;
     }
 
     void delete(String uuid) {  
