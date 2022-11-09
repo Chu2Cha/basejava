@@ -17,21 +17,20 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        try{
-            return storage[findIndex(uuid)];
-        } catch (ArrayIndexOutOfBoundsException e){
+        int index = findIndex(uuid);
+        if (index >= 0)
+            return storage[index];
+        else
             return null;
-        }
     }
 
     void delete(String uuid) {
-        try {
-            for (int i = findIndex(uuid); i < size; i++) {
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            for (int i = index; i < size; i++) {
                 storage[i] = storage[i + 1];
             }
             size--;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Nothing to delete");
         }
     }
 
