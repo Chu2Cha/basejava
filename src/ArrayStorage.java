@@ -20,17 +20,17 @@ public class ArrayStorage {
         int index = findIndex(uuid);
         if (index >= 0)
             return storage[index];
-        else
-            return null;
+        return null;
     }
 
     void delete(String uuid) {
         int index = findIndex(uuid);
         if (index >= 0) {
-            for (int i = index; i < size; i++) {
+            for (int i = index; i < size-1; i++) {
                 storage[i] = storage[i + 1];
             }
             size--;
+           storage[size]=null;
         }
     }
 
